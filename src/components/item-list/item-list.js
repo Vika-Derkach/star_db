@@ -14,19 +14,36 @@ export default class ItemList extends Component {
       this.setState({ itemList });
     });
   }
+  // renderDit({ gender, model, population }) {
+  //   if (gender) {
+  //     return gender;
+  //   }
+  //   if (model) {
+  //     return model;
+  //   }
+  //   if (population) {
+  //     return population;
+  //   }
+
+  //   // const {gender, model, population } = this.props
+  // }
   renderItems(arr) {
-    return arr.map(({ id, name }) => {
+    return arr.map((item) => {
+      const { id } = item;
+
+      const label = this.props.renderItem(item);
       return (
         <li
           className="list-group-item"
           key={id}
           onClick={() => this.props.onItemSelected(id)}
         >
-          {name}
+          {label}
         </li>
       );
     });
   }
+
   render() {
     const { itemList } = this.state;
     if (!itemList) {
