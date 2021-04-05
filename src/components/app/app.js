@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
 import SwapiService from '../../services/swapi-service';
 import ErrorBoundary from '../error-boundry';
-import ErrorButton from '../error-button';
 import ErrorIndicator from '../error-indicator/error-indicator';
 import Header from '../header';
 import ItemDetails, { Record } from '../item-details';
-import ItemList from '../item-list';
 import RandomPlanet from '../random-planet';
 import Row from '../row';
+import {
+  PersonDetails,
+  PersonList,
+  PlanetDetails,
+  PlanetList,
+  StarshipDetails,
+  StarshipList,
+} from '../sw-components';
 import './app.css';
 
 export default class App extends Component {
@@ -62,6 +68,8 @@ export default class App extends Component {
       <ErrorBoundary>
         <div className="stardb-app">
           <Header />
+          {/* <PersonList />
+          <PersonDetails /> */}
           <Row left={personDetails} right={starshipDetails} />
           {/* {planet}
           {/* <RandomPlanet /> */}
@@ -78,9 +86,36 @@ export default class App extends Component {
           {/* <ButtonToggle /> */}
           {/* <PeoplePage /> */}
           {/* разрив между персанажами  */}
+          <PersonDetails itemId={11} />
+          <PlanetDetails itemId={5} />
+          <StarshipDetails itemId={9} />
           <div className="row mb2">
             <div className="col-md-6">
-              <ItemList
+              <PersonList
+              // getData={this.swapiService.getAllPeople}
+              // onItemSelected={() => {}}
+              >
+                {({ name }) => <span>{name}</span>}
+              </PersonList>
+              <PlanetList
+              // getData={this.swapiService.getAllPeople}
+              // onItemSelected={() => {}}
+              >
+                {({ name }) => <span>{name}</span>}
+              </PlanetList>
+              <StarshipList
+              // getData={this.swapiService.getAllPeople}
+              // onItemSelected={() => {}}
+              >
+                {({ name }) => <span>{name}</span>}
+              </StarshipList>
+              {/* <PersonList
+              // getData={this.swapiService.getAllPlanets}
+              // onItemSelected={() => {}}
+              >
+                {({ name }) => <span>{name}</span>}
+              </PersonList> */}
+              {/* <ItemList
                 onItemSelected={this.onPersonSelected}
                 getData={this.swapiService.getAllPlanets}
                 renderItem={(item) => (
@@ -93,10 +128,10 @@ export default class App extends Component {
             <div className="col-md-6">
               <ItemDetails personId={this.state.selectedPerson} />
               <ErrorButton />
+            </div> */}
             </div>
-          </div>
 
-          <div className="row mb2">
+            {/* <div className="row mb2">
             <div className="col-md-6">
               <ItemList
                 onItemSelected={this.onPersonSelected}
@@ -108,6 +143,7 @@ export default class App extends Component {
               <ItemDetails personId={this.state.selectedPerson} />
               <ErrorButton />
             </div>
+          // </div> */}
           </div>
         </div>
       </ErrorBoundary>

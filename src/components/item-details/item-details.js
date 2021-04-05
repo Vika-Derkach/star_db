@@ -54,7 +54,7 @@ export default class ItemDetails extends Component {
     if (!this.state.item) {
       return <span>Select a item from the list</span>;
     }
-    const { id, name, gender, birthYear, eyeColor } = item;
+    const { name } = item;
 
     return (
       <div className="item-details card">

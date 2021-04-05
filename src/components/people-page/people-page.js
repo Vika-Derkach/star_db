@@ -28,6 +28,15 @@ export default class PeoplePage extends Component {
         getData={this.swapiService.getAllPeople}
         renderItem={(i) => `${i.name} ( ${i.birthYear})`}
       />
+      // <ItemList
+      // onItemSelected={this.onPersonSelected}
+      // getData={this.swapiService.getAllPeople}>
+
+      // {(i) => (
+      //   `${i.name} (${i.birthYear})`
+      // )}
+
+      // </ItemList>
     );
     const personDetails = <ItemDetails itemId={this.state.selectedPerson} />;
     return (
