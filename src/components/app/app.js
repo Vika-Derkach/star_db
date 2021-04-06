@@ -14,9 +14,11 @@ import {
   StarshipDetails,
   StarshipList,
 } from '../sw-components';
+import { SwapiServiceProvider } from '../swapi-service-context';
 import './app.css';
 
 export default class App extends Component {
+  // swapiService = new DummySwapiService();
   swapiService = new SwapiService();
   state = {
     showRandomPlanet: true,
@@ -66,15 +68,16 @@ export default class App extends Component {
     );
     return (
       <ErrorBoundary>
-        <div className="stardb-app">
-          <Header />
-          {/* <PersonList />
+        <SwapiServiceProvider value={this.swapiService}>
+          <div className="stardb-app">
+            <Header />
+            {/* <PersonList />
           <PersonDetails /> */}
-          <Row left={personDetails} right={starshipDetails} />
-          {/* {planet}
+            <Row left={personDetails} right={starshipDetails} />
+            {/* {planet}
           {/* <RandomPlanet /> */}
 
-          {/* <div className="row mb2 button-row">
+            {/* <div className="row mb2 button-row">
             <button
               className="toggle-planet btn btn-warning btn-lg"
               onClick={this.toggleRandomPlanet}
@@ -83,39 +86,34 @@ export default class App extends Component {
             </button>
             <ErrorButton />
           </div> */}
-          {/* <ButtonToggle /> */}
-          {/* <PeoplePage /> */}
-          {/* разрив между персанажами  */}
-          <PersonDetails itemId={11} />
-          <PlanetDetails itemId={5} />
-          <StarshipDetails itemId={9} />
-          <div className="row mb2">
-            <div className="col-md-6">
-              <PersonList
-              // getData={this.swapiService.getAllPeople}
+            {/* <ButtonToggle /> */}
+            {/* <PeoplePage /> */}
+            {/* разрив между персанажами  */}
+            <PersonDetails itemId={11} />
+            <PlanetDetails itemId={5} />
+            <StarshipDetails itemId={9} />
+            <div className="row mb2">
+              <div className="col-md-6">
+                <PersonList />
+                {/* // getData={this.swapiService.getAllPeople}
+              // onItemSelected={() => {}} */}
+
+                <PlanetList />
+                {/* // getData={this.swapiService.getAllPeople}
+              // onItemSelected={() => {}} */}
+
+                <StarshipList />
+                {/* // getData={this.swapiService.getAllPeople}
               // onItemSelected={() => {}}
-              >
-                {({ name }) => <span>{name}</span>}
-              </PersonList>
-              <PlanetList
-              // getData={this.swapiService.getAllPeople}
-              // onItemSelected={() => {}}
-              >
-                {({ name }) => <span>{name}</span>}
-              </PlanetList>
-              <StarshipList
-              // getData={this.swapiService.getAllPeople}
-              // onItemSelected={() => {}}
-              >
-                {({ name }) => <span>{name}</span>}
-              </StarshipList>
-              {/* <PersonList
+             */}
+
+                {/* <PersonList
               // getData={this.swapiService.getAllPlanets}
               // onItemSelected={() => {}}
               >
                 {({ name }) => <span>{name}</span>}
               </PersonList> */}
-              {/* <ItemList
+                {/* <ItemList
                 onItemSelected={this.onPersonSelected}
                 getData={this.swapiService.getAllPlanets}
                 renderItem={(item) => (
@@ -129,9 +127,9 @@ export default class App extends Component {
               <ItemDetails personId={this.state.selectedPerson} />
               <ErrorButton />
             </div> */}
-            </div>
+              </div>
 
-            {/* <div className="row mb2">
+              {/* <div className="row mb2">
             <div className="col-md-6">
               <ItemList
                 onItemSelected={this.onPersonSelected}
@@ -144,8 +142,9 @@ export default class App extends Component {
               <ErrorButton />
             </div>
           // </div> */}
+            </div>
           </div>
-        </div>
+        </SwapiServiceProvider>
       </ErrorBoundary>
     );
   }

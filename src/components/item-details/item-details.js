@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import SwapiService from '../../services/swapi-service';
 import './item-details.css';
 const Record = ({ item, field, label }) => {
-  console.log({ item, field, label });
   return (
     <li className="list-group-item">
       <span className="term">{label}</span>
@@ -29,9 +28,9 @@ export default class ItemDetails extends Component {
   }
   onItemLoaded = (item) => {
     const { getImageUrl } = this.props;
-    console.log('props', this.props);
+
     const image = getImageUrl(item);
-    console.log({ image, item });
+
     this.setState({ item, loading: false, image });
   };
   onError = (err) => {
