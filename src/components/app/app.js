@@ -1,29 +1,36 @@
 import React, { Component } from 'react';
+import DummySwapiService from '../../services/dummy-swapi-service';
 import SwapiService from '../../services/swapi-service';
 import ErrorBoundary from '../error-boundry';
+import ErrorButton from '../error-button';
 import ErrorIndicator from '../error-indicator/error-indicator';
 import Header from '../header';
 import ItemDetails, { Record } from '../item-details';
+import { PeoplePageR, PlanetsPage, StarshipPage } from '../pages';
 import RandomPlanet from '../random-planet';
 import Row from '../row';
-import {
-  PersonDetails,
-  PersonList,
-  PlanetDetails,
-  PlanetList,
-  StarshipDetails,
-  StarshipList,
-} from '../sw-components';
 import { SwapiServiceProvider } from '../swapi-service-context';
 import './app.css';
 
 export default class App extends Component {
   // swapiService = new DummySwapiService();
-  swapiService = new SwapiService();
+  // swapiService = new SwapiService();
   state = {
     showRandomPlanet: true,
 
     hasError: false,
+    swapiService: new SwapiService(),
+  };
+
+  onServiceChange = () => {
+    this.setState(({ swapiService }) => {
+      const Service =
+        swapiService instanceof SwapiService ? DummySwapiService : SwapiService;
+
+      return {
+        swapiService: new Service(),
+      };
+    });
   };
   toggleRandomPlanet = () => {
     this.setState((state) => {
@@ -48,7 +55,7 @@ export default class App extends Component {
       getStarship,
       getStarshipImage,
       getPersonImage,
-    } = this.swapiService;
+    } = this.state.swapiService;
     const personDetails = (
       <ItemDetails itemId={11} getData={getPerson} getImageUrl={getPersonImage}>
         <Record field="gender" label="Gender" />
@@ -68,41 +75,40 @@ export default class App extends Component {
     );
     return (
       <ErrorBoundary>
-        <SwapiServiceProvider value={this.swapiService}>
+        <SwapiServiceProvider value={this.state.swapiService}>
           <div className="stardb-app">
-            <Header />
+            <Header onServiceChange={this.onServiceChange} />
             {/* <PersonList />
           <PersonDetails /> */}
-            <Row left={personDetails} right={starshipDetails} />
-            {/* {planet}
-          {/* <RandomPlanet /> */}
+            {planet}
 
-            {/* <div className="row mb2 button-row">
-            <button
-              className="toggle-planet btn btn-warning btn-lg"
-              onClick={this.toggleRandomPlanet}
-            >
-              Toggle Random Planet
-            </button>
-            <ErrorButton />
-          </div> */}
+            <RandomPlanet />
+
+            <div className="row mb2 button-row">
+              <button
+                className="toggle-planet btn btn-warning btn-lg"
+                onClick={this.toggleRandomPlanet}
+              >
+                Toggle Random Planet
+              </button>
+              <ErrorButton />
+            </div>
             {/* <ButtonToggle /> */}
             {/* <PeoplePage /> */}
             {/* разрив между персанажами  */}
-            <PersonDetails itemId={11} />
-            <PlanetDetails itemId={5} />
-            <StarshipDetails itemId={9} />
+            <Row left={personDetails} right={starshipDetails} />
+            <PeoplePageR />
+            <PlanetsPage />
+            <StarshipPage />
+
             <div className="row mb2">
               <div className="col-md-6">
-                <PersonList />
                 {/* // getData={this.swapiService.getAllPeople}
               // onItemSelected={() => {}} */}
 
-                <PlanetList />
                 {/* // getData={this.swapiService.getAllPeople}
               // onItemSelected={() => {}} */}
 
-                <StarshipList />
                 {/* // getData={this.swapiService.getAllPeople}
               // onItemSelected={() => {}}
              */}

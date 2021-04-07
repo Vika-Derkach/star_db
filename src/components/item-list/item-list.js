@@ -2,7 +2,6 @@ import React from 'react';
 import './item-list.css';
 const ItemList = (props) => {
   const { data, onItemSelected, children: renderLabel } = props;
-  console.log(renderLabel);
 
   const items = data.map((item) => {
     if (!renderLabel) {
