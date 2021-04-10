@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ErrorButton from '../error-button';
 import './row.css';
@@ -11,5 +12,9 @@ const Row = ({ left, right }) => {
       </div>
     </div>
   );
+};
+Row.propTypes = {
+  left: PropTypes.node,
+  right: PropTypes.node,
 };
 export default Row;
