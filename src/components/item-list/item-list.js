@@ -22,6 +22,9 @@ const ItemList = (props) => {
   });
   return <ul className="item-list list-group">{items}</ul>;
 };
+ItemList.defaultProps = {
+  onItemSelected: () => {},
+};
 export default ItemList;
 // const { getAllPeople, getAllPlanets, getAllStarships } = new SwapService();
 // export default withData(ItemList, getAllPeople, getAllPlanets, getAllStarships);
