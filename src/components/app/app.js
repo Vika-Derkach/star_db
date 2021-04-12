@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import DummySwapiService from '../../services/dummy-swapi-service';
 import SwapiService from '../../services/swapi-service';
 import ErrorBoundary from '../error-boundry';
@@ -11,7 +12,6 @@ import RandomPlanet from '../random-planet';
 import Row from '../row';
 import { SwapiServiceProvider } from '../swapi-service-context';
 import './app.css';
-
 export default class App extends Component {
   // swapiService = new DummySwapiService();
   // swapiService = new SwapiService();
@@ -76,50 +76,54 @@ export default class App extends Component {
     return (
       <ErrorBoundary>
         <SwapiServiceProvider value={this.state.swapiService}>
-          <div className="stardb-app">
-            <Header onServiceChange={this.onServiceChange} />
-            {/* <PersonList />
+          <Router>
+            <div className="stardb-app">
+              <Header onServiceChange={this.onServiceChange} />
+              {/* <PersonList />
           <PersonDetails /> */}
-            {planet}
+              {planet}
 
-            <RandomPlanet />
+              <RandomPlanet />
 
-            <div className="row mb2 button-row">
-              <button
-                className="toggle-planet btn btn-warning btn-lg"
-                onClick={this.toggleRandomPlanet}
-              >
-                Toggle Random Planet
-              </button>
-              <ErrorButton />
-            </div>
-            {/* <ButtonToggle /> */}
-            {/* <PeoplePage /> */}
-            {/* разрив между персанажами  */}
-            <Row left={personDetails} right={starshipDetails} />
-            <PeoplePageR />
-            <PlanetsPage />
-            <StarshipPage />
+              <div className="row mb2 button-row">
+                <button
+                  className="toggle-planet btn btn-warning btn-lg"
+                  onClick={this.toggleRandomPlanet}
+                >
+                  Toggle Random Planet
+                </button>
+                <ErrorButton />
+              </div>
+              {/* <ButtonToggle /> */}
+              {/* <PeoplePage /> */}
+              {/* разрив между персанажами  */}
 
-            <div className="row mb2">
-              <div className="col-md-6">
-                {/* // getData={this.swapiService.getAllPeople}
+              <Route path="/people" component={PeoplePageR} />
+              <Route path="/planets" component={PlanetsPage} />
+              <Route path="/starship" component={StarshipPage} />
+              {/* <PeoplePageR />
+              <PlanetsPage />
+              <StarshipPage /> */}
+              <Row left={personDetails} right={starshipDetails} />
+              <div className="row mb2">
+                <div className="col-md-6">
+                  {/* // getData={this.swapiService.getAllPeople}
               // onItemSelected={() => {}} */}
 
-                {/* // getData={this.swapiService.getAllPeople}
+                  {/* // getData={this.swapiService.getAllPeople}
               // onItemSelected={() => {}} */}
 
-                {/* // getData={this.swapiService.getAllPeople}
+                  {/* // getData={this.swapiService.getAllPeople}
               // onItemSelected={() => {}}
              */}
 
-                {/* <PersonList
+                  {/* <PersonList
               // getData={this.swapiService.getAllPlanets}
               // onItemSelected={() => {}}
               >
                 {({ name }) => <span>{name}</span>}
               </PersonList> */}
-                {/* <ItemList
+                  {/* <ItemList
                 onItemSelected={this.onPersonSelected}
                 getData={this.swapiService.getAllPlanets}
                 renderItem={(item) => (
@@ -133,9 +137,9 @@ export default class App extends Component {
               <ItemDetails personId={this.state.selectedPerson} />
               <ErrorButton />
             </div> */}
-              </div>
+                </div>
 
-              {/* <div className="row mb2">
+                {/* <div className="row mb2">
             <div className="col-md-6">
               <ItemList
                 onItemSelected={this.onPersonSelected}
@@ -148,8 +152,9 @@ export default class App extends Component {
               <ErrorButton />
             </div>
           // </div> */}
+              </div>
             </div>
-          </div>
+          </Router>
         </SwapiServiceProvider>
       </ErrorBoundary>
     );
