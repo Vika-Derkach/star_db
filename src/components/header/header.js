@@ -23,6 +23,9 @@ const Header = ({ onServiceChange }) => {
         <li>
           <Link to="/secret">Secret</Link>
         </li>
+        <li>
+          <Link to="/data">Some data</Link>
+        </li>
       </ul>
       <button className="btn btn-primary brn-sm" onClick={onServiceChange}>
         Change Service
