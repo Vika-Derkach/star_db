@@ -10,6 +10,7 @@ import ItemDetails, { Record } from '../item-details';
 import { PeoplePageR, PlanetsPage, StarshipPage } from '../pages';
 import RandomPlanet from '../random-planet';
 import Row from '../row';
+import { StarshipDetails } from '../sw-components';
 import { SwapiServiceProvider } from '../swapi-service-context';
 import './app.css';
 export default class App extends Component {
@@ -97,10 +98,20 @@ export default class App extends Component {
               {/* <ButtonToggle /> */}
               {/* <PeoplePage /> */}
               {/* разрив между персанажами  */}
+              <Route path="/" render={() => <h2>Welcome to starDB</h2>} exact />
+              <Route path="/people" render={() => <h2>People</h2>} exact />
 
-              <Route path="/people" component={PeoplePageR} />
+              <Route path="/people/:id?" component={PeoplePageR} />
               <Route path="/planets" component={PlanetsPage} />
-              <Route path="/starship" component={StarshipPage} />
+              <Route path="/starship" exact component={StarshipPage} />
+              <Route
+                path="/starship/:id"
+                render={({ match }) => {
+                  const { id } = match.params;
+
+                  return <StarshipDetails itemId={id} />;
+                }}
+              />
               {/* <PeoplePageR />
               <PlanetsPage />
               <StarshipPage /> */}

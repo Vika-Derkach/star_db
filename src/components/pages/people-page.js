@@ -1,23 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { withRouter } from 'react-router-dom';
 import Row from '../row';
 import { PersonDetails, PersonList } from '../sw-components';
 
-export default class PeoplePageR extends Component {
-  state = {
-    selectedItem: null,
-  };
-  onItemSelected = (selectedItem) => {
-    this.setState({
-      selectedItem,
-    });
-  };
-  render() {
-    const { selectedItem } = this.state;
-    return (
-      <Row
-        left={<PersonList onItemSelected={this.onItemSelected} />}
-        right={<PersonDetails itemId={selectedItem} />}
-      />
-    );
-  }
-}
+const PeoplePageR = ({ history, match }) => {
+  const { id } = match.params;
+  return (
+    <Row
+      left={<PersonList onItemSelected={(id) => history.push(id)} />}
+      right={<PersonDetails itemId={id} />}
+    />
+  );
+};
+export default withRouter(PeoplePageR);
