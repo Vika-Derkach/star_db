@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import DummySwapiService from '../../services/dummy-swapi-service';
 import SwapiService from '../../services/swapi-service';
 import ErrorBoundary from '../error-boundry';
@@ -7,7 +7,13 @@ import ErrorButton from '../error-button';
 import ErrorIndicator from '../error-indicator/error-indicator';
 import Header from '../header';
 import ItemDetails, { Record } from '../item-details';
-import { PeoplePageR, PlanetsPage, StarshipPage } from '../pages';
+import {
+  LoginPage,
+  PeoplePageR,
+  PlanetsPage,
+  SecretPage,
+  StarshipPage,
+} from '../pages';
 import RandomPlanet from '../random-planet';
 import Row from '../row';
 import { StarshipDetails } from '../sw-components';
@@ -18,11 +24,13 @@ export default class App extends Component {
   // swapiService = new SwapiService();
   state = {
     showRandomPlanet: true,
-
     hasError: false,
     swapiService: new SwapiService(),
+    isLoggedIn: false,
   };
-
+  onLogin = () => {
+    this.setState({ isLoggedIn: true });
+  };
   onServiceChange = () => {
     this.setState(({ swapiService }) => {
       const Service =
@@ -51,6 +59,7 @@ export default class App extends Component {
     }
 
     const planet = this.state.showRandomPlanet ? <RandomPlanet /> : null;
+    const { isLoggedIn } = this.state;
     const {
       getPerson,
       getStarship,
@@ -98,20 +107,38 @@ export default class App extends Component {
               {/* <ButtonToggle /> */}
               {/* <PeoplePage /> */}
               {/* разрив между персанажами  */}
-              <Route path="/" render={() => <h2>Welcome to starDB</h2>} exact />
-              <Route path="/people" render={() => <h2>People</h2>} exact />
+              <Switch>
+                <Route
+                  path="/"
+                  render={() => <h2>Welcome to starDB</h2>}
+                  exact
+                />
+                {/* <Route path="/people" render={() => <h2>People</h2>} exact /> */}
 
-              <Route path="/people/:id?" component={PeoplePageR} />
-              <Route path="/planets" component={PlanetsPage} />
-              <Route path="/starship" exact component={StarshipPage} />
-              <Route
-                path="/starship/:id"
-                render={({ match }) => {
-                  const { id } = match.params;
+                <Route path="/people/:id?" component={PeoplePageR} />
+                <Route path="/planets" component={PlanetsPage} />
+                <Route path="/starship" exact component={StarshipPage} />
+                <Route
+                  path="/starship/:id"
+                  render={({ match }) => {
+                    const { id } = match.params;
 
-                  return <StarshipDetails itemId={id} />;
-                }}
-              />
+                    return <StarshipDetails itemId={id} />;
+                  }}
+                />
+                <Route
+                  path="/login"
+                  render={() => (
+                    <LoginPage isLoggedIn={isLoggedIn} onLogin={this.onLogin} />
+                  )}
+                />
+                <Route
+                  path="/secret"
+                  render={() => <SecretPage isLoggedIn={isLoggedIn} />}
+                />
+                <Route render={() => <h2>Page is not found</h2>} />
+                {/* <Redirect to="/" /> */}
+              </Switch>
               {/* <PeoplePageR />
               <PlanetsPage />
               <StarshipPage /> */}
